@@ -157,7 +157,7 @@ The event tap and the overlay need system permissions and a screen, so they aren
 unit tested. The hold state machine, shortcut matching, delay policy and settings
 persistence all are.
 
-## Thanks
+## Thanks to
 
 Inspired by [qblocker](https://github.com/steve228uk/qblocker), which pioneered this
 idea on macOS.
