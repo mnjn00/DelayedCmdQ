@@ -1,0 +1,3 @@
+import DelayedCmdQKit
+
+AppLauncher.run()
