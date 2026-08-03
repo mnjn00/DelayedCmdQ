@@ -12,8 +12,8 @@
 [![Platform](https://img.shields.io/badge/macOS-14%2B-000000?logo=apple&logoColor=white)](https://www.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://swift.org)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/mnjn00/DelayedCmdQ?color=brightgreen)](https://github.com/mnjn00/DelayedCmdQ/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/mnjn00/DelayedCmdQ/total?color=orange)](https://github.com/mnjn00/DelayedCmdQ/releases)
+[![Release](https://img.shields.io/github/v/release/mnjn00/DelayedCmdQ?sort=semver&display_name=tag&color=brightgreen)](https://github.com/mnjn00/DelayedCmdQ/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/mnjn00/DelayedCmdQ/total?label=downloads&color=orange)](https://github.com/mnjn00/DelayedCmdQ/releases)
 
 [English](README.md) · **한국어** · [日本語](README.ja.md) · [简体中文](README.zh-Hans.md)
 
