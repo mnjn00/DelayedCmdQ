@@ -23,6 +23,7 @@ extension Localization {
         durationSecondsFormat: "%.1fs",
         previewHint: "Click to preview",
         delayTitle: "Delay",
+        glassOpacityTitle: "Glass opacity",
         continuousQuitTitle: "Allow continuous quit",
         continuousQuitSubtitle: "Keep holding to quit the next app as well",
         pauseTitle: "Pause",

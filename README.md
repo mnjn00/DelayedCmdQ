@@ -110,6 +110,7 @@ Open from the menu bar icon, or press <kbd>⌘</kbd><kbd>,</kbd>.
 | Setting | Description | Default |
 | --- | --- | --- |
 | **Delay** | How long ⌘Q must be held | `1.0s` |
+| **Glass opacity** | How solid the glass behind the ring is drawn | `100%` |
 | **Theme** | System, Light or Dark | System |
 | **Language** | System, English, 한국어, 日本語 or 简体中文 | System |
 | **Allow continuous quit** | Keep quitting the next app while held | Off |

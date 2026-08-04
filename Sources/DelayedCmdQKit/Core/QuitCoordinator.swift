@@ -83,7 +83,8 @@ final class QuitCoordinator {
 
         overlay.present(
             icon: settings.showsApplicationIcon ? target?.icon : nil,
-            duration: settings.holdDuration
+            duration: settings.holdDuration,
+            glassOpacity: settings.glassOpacity
         )
         countdown.start(duration: settings.holdDuration) { [weak self] in
             self?.completeHold()

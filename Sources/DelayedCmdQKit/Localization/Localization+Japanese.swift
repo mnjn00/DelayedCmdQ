@@ -23,6 +23,7 @@ extension Localization {
         durationSecondsFormat: "%.1f秒",
         previewHint: "クリックするとプレビューします",
         delayTitle: "遅延時間",
+        glassOpacityTitle: "ガラスの不透明度",
         continuousQuitTitle: "連続終了を許可",
         continuousQuitSubtitle: "押し続けている間、次のアプリも続けて終了します",
         pauseTitle: "一時停止",

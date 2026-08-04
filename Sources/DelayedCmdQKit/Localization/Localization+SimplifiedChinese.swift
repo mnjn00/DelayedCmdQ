@@ -23,6 +23,7 @@ extension Localization {
         durationSecondsFormat: "%.1f 秒",
         previewHint: "点按可预览",
         delayTitle: "延迟时间",
+        glassOpacityTitle: "玻璃不透明度",
         continuousQuitTitle: "允许连续退出",
         continuousQuitSubtitle: "持续按住时继续退出下一个应用",
         pauseTitle: "暂停",

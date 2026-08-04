@@ -10,7 +10,11 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            RingPreview(duration: settings.holdDuration, hint: strings.previewHint)
+            RingPreview(
+                duration: settings.holdDuration,
+                glassOpacity: settings.glassOpacity,
+                hint: strings.previewHint
+            )
                 .padding(.top, 22)
 
             Text(strings.holdSummary(settings.holdDuration))
@@ -26,6 +30,7 @@ struct SettingsView: View {
             VStack(spacing: 16) {
                 durationRow
                 Divider()
+                glassOpacityRow
                 appearanceRow
                 languageRow
                 Divider()
@@ -84,6 +89,34 @@ struct SettingsView: View {
                     .foregroundStyle(.tertiary)
             } maximumValueLabel: {
                 Text(strings.duration(HoldDuration.range.upperBound))
+                    .font(.system(size: 10))
+                    .foregroundStyle(.tertiary)
+            }
+        }
+    }
+
+    private var glassOpacityRow: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(strings.glassOpacityTitle).font(.system(size: 13))
+                Spacer()
+                Text(GlassOpacity.text(settings.glassOpacity))
+                    .font(.system(size: 13, weight: .medium).monospacedDigit())
+                    .foregroundStyle(.secondary)
+            }
+
+            Slider(
+                value: $settings.glassOpacity,
+                in: GlassOpacity.range,
+                step: GlassOpacity.step
+            ) {
+                EmptyView()
+            } minimumValueLabel: {
+                Text(GlassOpacity.text(GlassOpacity.range.lowerBound))
+                    .font(.system(size: 10))
+                    .foregroundStyle(.tertiary)
+            } maximumValueLabel: {
+                Text(GlassOpacity.text(GlassOpacity.range.upperBound))
                     .font(.system(size: 10))
                     .foregroundStyle(.tertiary)
             }
@@ -200,6 +233,7 @@ private struct GlassButton: View {
 /// instead of by number.
 private struct RingPreview: View {
     let duration: TimeInterval
+    let glassOpacity: Double
     let hint: String
 
     @State private var progress: Double = 0
@@ -208,7 +242,12 @@ private struct RingPreview: View {
     var body: some View {
         // Inside an opaque window, so the coin blends within the window rather
         // than sampling the desktop through it.
-        RingHUD(progress: progress, icon: nil, blendsBehindWindow: false)
+        RingHUD(
+            progress: progress,
+            icon: nil,
+            blendsBehindWindow: false,
+            glassOpacity: glassOpacity
+        )
             .frame(width: RingMetrics.canvas, height: RingMetrics.canvas * 0.78)
             .contentShape(Rectangle())
             .onTapGesture { replay() }

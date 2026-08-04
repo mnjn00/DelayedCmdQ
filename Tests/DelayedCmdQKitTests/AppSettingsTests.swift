@@ -22,6 +22,7 @@ struct AppSettingsTests {
         #expect(settings.allowsContinuousQuit == false)
         #expect(settings.appearance == .system)
         #expect(settings.language == .system)
+        #expect(settings.glassOpacity == GlassOpacity.default)
     }
 
     @Test("Changes round-trip through UserDefaults")
@@ -35,6 +36,7 @@ struct AppSettingsTests {
         settings.allowsContinuousQuit = true
         settings.appearance = .dark
         settings.language = .japanese
+        settings.glassOpacity = 0.5
 
         let reloaded = AppSettings(defaults: defaults)
         #expect(reloaded.holdDuration == 2.5)
@@ -43,6 +45,7 @@ struct AppSettingsTests {
         #expect(reloaded.allowsContinuousQuit == true)
         #expect(reloaded.appearance == .dark)
         #expect(reloaded.language == .japanese)
+        #expect(reloaded.glassOpacity == 0.5)
     }
 
     @Test("An unrecognised stored enum falls back instead of bricking the preference")

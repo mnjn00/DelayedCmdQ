@@ -34,6 +34,7 @@ struct Localization: Sendable, Equatable {
     let durationSecondsFormat: String
     let previewHint: String
     let delayTitle: String
+    let glassOpacityTitle: String
     let continuousQuitTitle: String
     let continuousQuitSubtitle: String
     let pauseTitle: String

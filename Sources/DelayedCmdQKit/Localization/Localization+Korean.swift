@@ -23,6 +23,7 @@ extension Localization {
         durationSecondsFormat: "%.1f초",
         previewHint: "클릭하면 미리 봅니다",
         delayTitle: "지연 시간",
+        glassOpacityTitle: "유리 불투명도",
         continuousQuitTitle: "연속 종료 허용",
         continuousQuitSubtitle: "계속 누르고 있으면 다음 앱도 이어서 종료합니다",
         pauseTitle: "일시 중지",

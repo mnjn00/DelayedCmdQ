@@ -12,12 +12,13 @@ final class OverlayPresenter {
     private var panel: OverlayPanel?
     private var teardownWorkItem: DispatchWorkItem?
 
-    func present(icon: NSImage?, duration: TimeInterval) {
+    func present(icon: NSImage?, duration: TimeInterval, glassOpacity: Double) {
         teardownWorkItem?.cancel()
         teardownWorkItem = nil
 
         let panel = existingPanel()
         model.icon = icon
+        model.glassOpacity = glassOpacity
         // Reset without animation so the fill always starts from an empty ring.
         var reset = Transaction()
         reset.disablesAnimations = true
