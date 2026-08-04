@@ -35,26 +35,17 @@ struct RingHUD: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(.regularMaterial)
-                .overlay(Circle().strokeBorder(Color.primary.opacity(0.06), lineWidth: 1))
-                .frame(width: RingMetrics.coin, height: RingMetrics.coin)
-                .shadow(color: .black.opacity(0.16), radius: 13, x: 0, y: 5)
+                .stroke(Color.primary.opacity(0.12), lineWidth: RingMetrics.lineWidth)
 
-            ZStack {
-                Circle()
-                    .stroke(Color.primary.opacity(0.12), lineWidth: RingMetrics.lineWidth)
-
-                Circle()
-                    .trim(from: 0, to: progress)
-                    .stroke(
-                        Color.primary,
-                        style: StrokeStyle(lineWidth: RingMetrics.lineWidth, lineCap: .round)
-                    )
-                    // SwiftUI trims clockwise from three o'clock; rotate so the fill
-                    // starts at the top the way a clock face reads.
-                    .rotationEffect(.degrees(-90))
-            }
-            .frame(width: RingMetrics.ring, height: RingMetrics.ring)
+            Circle()
+                .trim(from: 0, to: progress)
+                .stroke(
+                    Color.primary,
+                    style: StrokeStyle(lineWidth: RingMetrics.lineWidth, lineCap: .round)
+                )
+                // SwiftUI trims clockwise from three o'clock; rotate so the fill
+                // starts at the top the way a clock face reads.
+                .rotationEffect(.degrees(-90))
 
             if let icon {
                 Image(nsImage: icon)
@@ -64,6 +55,8 @@ struct RingHUD: View {
                     .opacity(0.9)
             }
         }
+        .frame(width: RingMetrics.ring, height: RingMetrics.ring)
+        .glassCoin(diameter: RingMetrics.coin)
         .frame(width: RingMetrics.canvas, height: RingMetrics.canvas)
         .accessibilityHidden(true)
     }

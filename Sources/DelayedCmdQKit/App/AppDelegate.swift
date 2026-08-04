@@ -13,6 +13,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var cancellables: Set<AnyCancellable> = []
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        applyAppearance()
+
         let coordinator = QuitCoordinator(settings: settings, authorization: authorization)
         let statusItemController = StatusItemController(
             settings: settings,
@@ -31,11 +33,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.statusItemController = statusItemController
         self.settingsWindowController = settingsWindowController
 
-        MainMenu.install(settingsTarget: self, settingsAction: #selector(openSettings))
+        installMainMenu()
 
-        settings.$holdDuration
+        settings.$appearance
+            .dropFirst()
             .receive(on: RunLoop.main)
-            .sink { [weak statusItemController] _ in statusItemController?.refresh() }
+            .sink { [weak self] _ in self?.applyAppearance() }
+            .store(in: &cancellables)
+
+        settings.$language
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.installMainMenu() }
             .store(in: &cancellables)
 
         authorization.beginMonitoring()
@@ -51,6 +60,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         coordinator?.stop()
+    }
+
+    /// Scopes the light/dark override to this app's own windows.
+    private func applyAppearance() {
+        NSApp.appearance = settings.appearance.nsAppearance
+    }
+
+    private func installMainMenu() {
+        MainMenu.install(
+            strings: settings.strings,
+            settingsTarget: self,
+            settingsAction: #selector(openSettings)
+        )
     }
 
     @objc private func openSettings() {

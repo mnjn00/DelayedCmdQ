@@ -20,6 +20,8 @@ struct AppSettingsTests {
         #expect(settings.isPaused == false)
         #expect(settings.showsApplicationIcon == true)
         #expect(settings.allowsContinuousQuit == false)
+        #expect(settings.appearance == .system)
+        #expect(settings.language == .system)
     }
 
     @Test("Changes round-trip through UserDefaults")
@@ -31,12 +33,38 @@ struct AppSettingsTests {
         settings.isPaused = true
         settings.showsApplicationIcon = false
         settings.allowsContinuousQuit = true
+        settings.appearance = .dark
+        settings.language = .japanese
 
         let reloaded = AppSettings(defaults: defaults)
         #expect(reloaded.holdDuration == 2.5)
         #expect(reloaded.isPaused == true)
         #expect(reloaded.showsApplicationIcon == false)
         #expect(reloaded.allowsContinuousQuit == true)
+        #expect(reloaded.appearance == .dark)
+        #expect(reloaded.language == .japanese)
+    }
+
+    @Test("An unrecognised stored enum falls back instead of bricking the preference")
+    func repairsUnknownEnumValues() {
+        let defaults = makeDefaults("unknown-enum")
+        defaults.set("neon", forKey: AppSettings.Key.appearance)
+        defaults.set("klingon", forKey: AppSettings.Key.language)
+
+        let settings = AppSettings(defaults: defaults)
+        #expect(settings.appearance == .system)
+        #expect(settings.language == .system)
+    }
+
+    @Test("Changing the language swaps the strings the UI reads")
+    func languageDrivesStrings() {
+        let settings = AppSettings(defaults: makeDefaults("strings"))
+
+        settings.language = .korean
+        #expect(settings.strings == .korean)
+
+        settings.language = .simplifiedChinese
+        #expect(settings.strings == .simplifiedChinese)
     }
 
     @Test("An out-of-range stored value is repaired on load")

@@ -1,0 +1,45 @@
+extension Localization {
+    static let simplifiedChinese = Localization(
+        menuStatusPermissionRequired: "需要辅助功能权限",
+        menuStatusPaused: "已暂停",
+        menuStatusActiveFormat: "按住 ⌘Q %@ 退出",
+        menuOpenAccessibilitySettings: "打开辅助功能设置",
+        menuPause: "暂停",
+        menuSettings: "设置...",
+        menuQuit: "退出 Delayed Cmd+Q",
+        menuTooltipActive: "Delayed Cmd+Q - 已启用",
+        menuTooltipInactive: "Delayed Cmd+Q - 已停用",
+
+        menuEdit: "编辑",
+        menuUndo: "撤销",
+        menuCut: "剪切",
+        menuCopy: "拷贝",
+        menuPaste: "粘贴",
+        menuSelectAll: "全选",
+        menuWindow: "窗口",
+        menuClose: "关闭",
+
+        holdSummaryFormat: "按住 ⌘Q %@ 即可退出当前应用",
+        durationSecondsFormat: "%.1f 秒",
+        previewHint: "点按可预览",
+        delayTitle: "延迟时间",
+        continuousQuitTitle: "允许连续退出",
+        continuousQuitSubtitle: "持续按住时继续退出下一个应用",
+        pauseTitle: "暂停",
+        pauseSubtitle: "恢复 ⌘Q 的原有行为",
+        launchAtLoginTitle: "登录时启动",
+        showAppIconTitle: "显示应用图标",
+        showAppIconSubtitle: "在圆环中央显示将被退出的应用",
+        appearanceTitle: "主题",
+        appearanceSystem: "跟随系统",
+        appearanceLight: "浅色",
+        appearanceDark: "深色",
+        languageTitle: "语言",
+        languageSystem: "跟随系统",
+
+        accessibilityGranted: "已获得辅助功能权限",
+        accessibilityRequired: "需要辅助功能权限",
+        openSystemSettings: "打开设置",
+        eventTapFailure: "无法拦截键盘事件。请检查辅助功能权限。"
+    )
+}

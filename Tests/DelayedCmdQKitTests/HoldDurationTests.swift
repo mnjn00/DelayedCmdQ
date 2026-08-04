@@ -50,10 +50,4 @@ struct HoldDurationTests {
         #expect(HoldDuration.normalized(HoldDuration.default) == HoldDuration.default)
         #expect(HoldDuration.range.contains(HoldDuration.default))
     }
-
-    @Test("Durations render with one decimal place")
-    func formatsDuration() {
-        #expect(HoldDuration.text(1.0) == "1.0초")
-        #expect(HoldDuration.text(2.5) == "2.5초")
-    }
 }

@@ -1,0 +1,45 @@
+extension Localization {
+    static let english = Localization(
+        menuStatusPermissionRequired: "Accessibility access required",
+        menuStatusPaused: "Paused",
+        menuStatusActiveFormat: "Hold ⌘Q for %@ to quit",
+        menuOpenAccessibilitySettings: "Open Accessibility Settings",
+        menuPause: "Pause",
+        menuSettings: "Settings...",
+        menuQuit: "Quit Delayed Cmd+Q",
+        menuTooltipActive: "Delayed Cmd+Q - active",
+        menuTooltipInactive: "Delayed Cmd+Q - inactive",
+
+        menuEdit: "Edit",
+        menuUndo: "Undo",
+        menuCut: "Cut",
+        menuCopy: "Copy",
+        menuPaste: "Paste",
+        menuSelectAll: "Select All",
+        menuWindow: "Window",
+        menuClose: "Close",
+
+        holdSummaryFormat: "Hold ⌘Q for %@ to quit the front app",
+        durationSecondsFormat: "%.1fs",
+        previewHint: "Click to preview",
+        delayTitle: "Delay",
+        continuousQuitTitle: "Allow continuous quit",
+        continuousQuitSubtitle: "Keep holding to quit the next app as well",
+        pauseTitle: "Pause",
+        pauseSubtitle: "Restore normal ⌘Q behaviour",
+        launchAtLoginTitle: "Launch at login",
+        showAppIconTitle: "Show app icon",
+        showAppIconSubtitle: "Draw the app being quit inside the ring",
+        appearanceTitle: "Theme",
+        appearanceSystem: "System",
+        appearanceLight: "Light",
+        appearanceDark: "Dark",
+        languageTitle: "Language",
+        languageSystem: "System",
+
+        accessibilityGranted: "Accessibility access granted",
+        accessibilityRequired: "Accessibility access required",
+        openSystemSettings: "Open Settings",
+        eventTapFailure: "Cannot intercept keyboard events. Check Accessibility access."
+    )
+}

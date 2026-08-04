@@ -5,39 +5,55 @@ import AppKit
 /// own ⌘Q work while the Settings window has focus.
 @MainActor
 enum MainMenu {
-    static func install(settingsTarget: AnyObject, settingsAction: Selector) {
+    static func install(
+        strings: Localization,
+        settingsTarget: AnyObject,
+        settingsAction: Selector
+    ) {
         let mainMenu = NSMenu()
 
         let appItem = NSMenuItem()
         let appMenu = NSMenu()
-        let settings = NSMenuItem(title: "설정...", action: settingsAction, keyEquivalent: ",")
+        let settings = NSMenuItem(
+            title: strings.menuSettings,
+            action: settingsAction,
+            keyEquivalent: ","
+        )
         settings.target = settingsTarget
         appMenu.addItem(settings)
         appMenu.addItem(.separator())
         appMenu.addItem(
-            withTitle: "Delayed Cmd+Q 종료",
+            withTitle: strings.menuQuit,
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"
         )
         appItem.submenu = appMenu
         mainMenu.addItem(appItem)
 
-        mainMenu.addItem(editMenuItem())
-        mainMenu.addItem(windowMenuItem())
+        mainMenu.addItem(editMenuItem(strings: strings))
+        mainMenu.addItem(windowMenuItem(strings: strings))
 
         NSApp.mainMenu = mainMenu
     }
 
-    private static func editMenuItem() -> NSMenuItem {
+    private static func editMenuItem(strings: Localization) -> NSMenuItem {
         let item = NSMenuItem()
-        let menu = NSMenu(title: "편집")
-        menu.addItem(withTitle: "실행 취소", action: Selector(("undo:")), keyEquivalent: "z")
+        let menu = NSMenu(title: strings.menuEdit)
+        menu.addItem(withTitle: strings.menuUndo, action: Selector(("undo:")), keyEquivalent: "z")
         menu.addItem(.separator())
-        menu.addItem(withTitle: "오려두기", action: #selector(NSText.cut(_:)), keyEquivalent: "x")
-        menu.addItem(withTitle: "복사하기", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
-        menu.addItem(withTitle: "붙여넣기", action: #selector(NSText.paste(_:)), keyEquivalent: "v")
+        menu.addItem(withTitle: strings.menuCut, action: #selector(NSText.cut(_:)), keyEquivalent: "x")
         menu.addItem(
-            withTitle: "전체 선택",
+            withTitle: strings.menuCopy,
+            action: #selector(NSText.copy(_:)),
+            keyEquivalent: "c"
+        )
+        menu.addItem(
+            withTitle: strings.menuPaste,
+            action: #selector(NSText.paste(_:)),
+            keyEquivalent: "v"
+        )
+        menu.addItem(
+            withTitle: strings.menuSelectAll,
             action: #selector(NSText.selectAll(_:)),
             keyEquivalent: "a"
         )
@@ -45,11 +61,11 @@ enum MainMenu {
         return item
     }
 
-    private static func windowMenuItem() -> NSMenuItem {
+    private static func windowMenuItem(strings: Localization) -> NSMenuItem {
         let item = NSMenuItem()
-        let menu = NSMenu(title: "윈도우")
+        let menu = NSMenu(title: strings.menuWindow)
         menu.addItem(
-            withTitle: "닫기",
+            withTitle: strings.menuClose,
             action: #selector(NSWindow.performClose(_:)),
             keyEquivalent: "w"
         )

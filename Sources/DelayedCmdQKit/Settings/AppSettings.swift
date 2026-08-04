@@ -9,6 +9,8 @@ final class AppSettings: ObservableObject {
         static let isPaused = "isPaused"
         static let showsApplicationIcon = "showsApplicationIcon"
         static let allowsContinuousQuit = "allowsContinuousQuit"
+        static let appearance = "appearance"
+        static let language = "language"
     }
 
     private let defaults: UserDefaults
@@ -40,6 +42,17 @@ final class AppSettings: ObservableObject {
         didSet { defaults.set(allowsContinuousQuit, forKey: Key.allowsContinuousQuit) }
     }
 
+    @Published var appearance: AppearanceMode {
+        didSet { defaults.set(appearance.rawValue, forKey: Key.appearance) }
+    }
+
+    @Published var language: AppLanguage {
+        didSet { defaults.set(language.rawValue, forKey: Key.language) }
+    }
+
+    /// Current strings. Views read this, so changing `language` re-renders them.
+    var strings: Localization { language.localization }
+
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
 
@@ -48,5 +61,16 @@ final class AppSettings: ObservableObject {
         isPaused = defaults.bool(forKey: Key.isPaused)
         showsApplicationIcon = defaults.object(forKey: Key.showsApplicationIcon) as? Bool ?? true
         allowsContinuousQuit = defaults.bool(forKey: Key.allowsContinuousQuit)
+        appearance = Self.enumValue(defaults.string(forKey: Key.appearance), default: .system)
+        language = Self.enumValue(defaults.string(forKey: Key.language), default: .system)
+    }
+
+    /// Falls back to the default when the stored string is missing or no longer a
+    /// case, so a downgrade or a hand-edited plist cannot brick a preference.
+    private static func enumValue<T: RawRepresentable>(
+        _ raw: String?,
+        default fallback: T
+    ) -> T where T.RawValue == String {
+        raw.flatMap(T.init(rawValue:)) ?? fallback
     }
 }

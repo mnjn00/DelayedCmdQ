@@ -2,13 +2,15 @@ import AppKit
 import CoreGraphics
 import Foundation
 
+/// User-facing wording lives in `Localization.eventTapFailure`; this stays in
+/// English because it is what ends up in a crash log or a bug report.
 enum QuitKeyMonitorError: LocalizedError {
     case tapCreationFailed
 
     var errorDescription: String? {
         switch self {
         case .tapCreationFailed:
-            return "키보드 이벤트를 가로챌 수 없습니다. 손쉬운 사용 권한을 확인해 주세요."
+            return "Could not create the keyboard event tap."
         }
     }
 }

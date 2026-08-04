@@ -1,0 +1,45 @@
+extension Localization {
+    static let korean = Localization(
+        menuStatusPermissionRequired: "손쉬운 사용 권한이 필요합니다",
+        menuStatusPaused: "일시 중지됨",
+        menuStatusActiveFormat: "⌘Q를 %@ 누르면 종료",
+        menuOpenAccessibilitySettings: "손쉬운 사용 권한 열기",
+        menuPause: "일시 중지",
+        menuSettings: "설정...",
+        menuQuit: "Delayed Cmd+Q 종료",
+        menuTooltipActive: "Delayed Cmd+Q - 활성",
+        menuTooltipInactive: "Delayed Cmd+Q - 비활성",
+
+        menuEdit: "편집",
+        menuUndo: "실행 취소",
+        menuCut: "오려두기",
+        menuCopy: "복사하기",
+        menuPaste: "붙여넣기",
+        menuSelectAll: "전체 선택",
+        menuWindow: "윈도우",
+        menuClose: "닫기",
+
+        holdSummaryFormat: "%@ 동안 ⌘Q를 누르고 있으면 앱이 종료됩니다",
+        durationSecondsFormat: "%.1f초",
+        previewHint: "클릭하면 미리 봅니다",
+        delayTitle: "지연 시간",
+        continuousQuitTitle: "연속 종료 허용",
+        continuousQuitSubtitle: "계속 누르고 있으면 다음 앱도 이어서 종료합니다",
+        pauseTitle: "일시 중지",
+        pauseSubtitle: "⌘Q를 원래대로 되돌립니다",
+        launchAtLoginTitle: "로그인 시 실행",
+        showAppIconTitle: "앱 아이콘 표시",
+        showAppIconSubtitle: "원 가운데에 종료될 앱을 보여줍니다",
+        appearanceTitle: "테마",
+        appearanceSystem: "시스템",
+        appearanceLight: "밝게",
+        appearanceDark: "어둡게",
+        languageTitle: "언어",
+        languageSystem: "시스템",
+
+        accessibilityGranted: "손쉬운 사용 권한 허용됨",
+        accessibilityRequired: "손쉬운 사용 권한 필요",
+        openSystemSettings: "설정 열기",
+        eventTapFailure: "키보드 이벤트를 가로챌 수 없습니다. 손쉬운 사용 권한을 확인해 주세요."
+    )
+}

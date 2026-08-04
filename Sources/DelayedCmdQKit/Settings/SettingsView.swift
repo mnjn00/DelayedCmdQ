@@ -6,14 +6,18 @@ struct SettingsView: View {
     @ObservedObject var authorization: AccessibilityAuthorization
     @ObservedObject var loginItem: LoginItem
 
+    private var strings: Localization { settings.strings }
+
     var body: some View {
         VStack(spacing: 0) {
-            RingPreview(duration: settings.holdDuration)
+            RingPreview(duration: settings.holdDuration, hint: strings.previewHint)
                 .padding(.top, 22)
 
-            Text("\(HoldDuration.text(settings.holdDuration)) 동안 ⌘Q를 누르고 있으면 앱이 종료됩니다")
+            Text(strings.holdSummary(settings.holdDuration))
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 22)
                 .padding(.top, 6)
                 .padding(.bottom, 22)
 
@@ -22,14 +26,25 @@ struct SettingsView: View {
             VStack(spacing: 16) {
                 durationRow
                 Divider()
+                appearanceRow
+                languageRow
+                Divider()
                 toggleRow(
-                    "연속 종료 허용",
-                    subtitle: "계속 누르고 있으면 다음 앱도 이어서 종료합니다",
+                    strings.continuousQuitTitle,
+                    subtitle: strings.continuousQuitSubtitle,
                     isOn: $settings.allowsContinuousQuit
                 )
-                toggleRow("일시 중지", subtitle: "⌘Q를 원래대로 되돌립니다", isOn: $settings.isPaused)
-                toggleRow("로그인 시 실행", subtitle: nil, isOn: loginItemBinding)
-                toggleRow("앱 아이콘 표시", subtitle: "원 가운데에 종료될 앱을 보여줍니다", isOn: $settings.showsApplicationIcon)
+                toggleRow(
+                    strings.pauseTitle,
+                    subtitle: strings.pauseSubtitle,
+                    isOn: $settings.isPaused
+                )
+                toggleRow(strings.launchAtLoginTitle, subtitle: nil, isOn: loginItemBinding)
+                toggleRow(
+                    strings.showAppIconTitle,
+                    subtitle: strings.showAppIconSubtitle,
+                    isOn: $settings.showsApplicationIcon
+                )
             }
             .padding(.horizontal, 22)
             .padding(.vertical, 18)
@@ -49,10 +64,10 @@ struct SettingsView: View {
     private var durationRow: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("지연 시간")
+                Text(strings.delayTitle)
                     .font(.system(size: 13))
                 Spacer()
-                Text(HoldDuration.text(settings.holdDuration))
+                Text(strings.duration(settings.holdDuration))
                     .font(.system(size: 13, weight: .medium).monospacedDigit())
                     .foregroundStyle(.secondary)
             }
@@ -64,14 +79,43 @@ struct SettingsView: View {
             ) {
                 EmptyView()
             } minimumValueLabel: {
-                Text(HoldDuration.text(HoldDuration.range.lowerBound))
+                Text(strings.duration(HoldDuration.range.lowerBound))
                     .font(.system(size: 10))
                     .foregroundStyle(.tertiary)
             } maximumValueLabel: {
-                Text(HoldDuration.text(HoldDuration.range.upperBound))
+                Text(strings.duration(HoldDuration.range.upperBound))
                     .font(.system(size: 10))
                     .foregroundStyle(.tertiary)
             }
+        }
+    }
+
+    private var appearanceRow: some View {
+        HStack {
+            Text(strings.appearanceTitle).font(.system(size: 13))
+            Spacer(minLength: 12)
+            Picker("", selection: $settings.appearance) {
+                ForEach(AppearanceMode.allCases, id: \.self) { mode in
+                    Text(mode.title(strings)).tag(mode)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.segmented)
+            .fixedSize()
+        }
+    }
+
+    private var languageRow: some View {
+        HStack {
+            Text(strings.languageTitle).font(.system(size: 13))
+            Spacer(minLength: 12)
+            Picker("", selection: $settings.language) {
+                ForEach(AppLanguage.allCases, id: \.self) { language in
+                    Text(language.endonym ?? strings.languageSystem).tag(language)
+                }
+            }
+            .labelsHidden()
+            .fixedSize()
         }
     }
 
@@ -83,6 +127,7 @@ struct SettingsView: View {
                     Text(subtitle)
                         .font(.system(size: 11))
                         .foregroundStyle(.tertiary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             Spacer(minLength: 12)
@@ -100,20 +145,27 @@ struct SettingsView: View {
                 .frame(width: 7, height: 7)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(authorization.isTrusted ? "손쉬운 사용 권한 허용됨" : "손쉬운 사용 권한 필요")
-                    .font(.system(size: 12))
+                Text(
+                    authorization.isTrusted
+                        ? strings.accessibilityGranted
+                        : strings.accessibilityRequired
+                )
+                .font(.system(size: 12))
+
                 if let error = loginItem.lastError {
                     Text(error)
                         .font(.system(size: 10))
                         .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
 
             Spacer()
 
             if !authorization.isTrusted {
-                Button("설정 열기") { authorization.openSystemSettings() }
-                    .controlSize(.small)
+                GlassButton(title: strings.openSystemSettings) {
+                    authorization.openSystemSettings()
+                }
             }
         }
     }
@@ -126,10 +178,29 @@ struct SettingsView: View {
     }
 }
 
+/// Uses the Liquid Glass button style where the OS provides it, and the standard
+/// bordered style on earlier releases.
+private struct GlassButton: View {
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        if #available(macOS 26.0, *) {
+            Button(title, action: action)
+                .buttonStyle(.glass)
+                .controlSize(.small)
+        } else {
+            Button(title, action: action)
+                .controlSize(.small)
+        }
+    }
+}
+
 /// Replays the ring at the configured duration so a value can be judged by eye
 /// instead of by number.
 private struct RingPreview: View {
     let duration: TimeInterval
+    let hint: String
 
     @State private var progress: Double = 0
     @State private var replayTask: Task<Void, Never>?
@@ -139,7 +210,7 @@ private struct RingPreview: View {
             .frame(width: RingMetrics.canvas, height: RingMetrics.canvas * 0.78)
             .contentShape(Rectangle())
             .onTapGesture { replay() }
-            .help("클릭하면 미리 봅니다")
+            .help(hint)
             .onAppear { replay() }
             .onChange(of: duration) { _, _ in replay() }
             .onDisappear {

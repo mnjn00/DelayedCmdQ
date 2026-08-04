@@ -1,0 +1,45 @@
+extension Localization {
+    static let japanese = Localization(
+        menuStatusPermissionRequired: "アクセシビリティの許可が必要です",
+        menuStatusPaused: "一時停止中",
+        menuStatusActiveFormat: "⌘Q を %@ 押すと終了",
+        menuOpenAccessibilitySettings: "アクセシビリティ設定を開く",
+        menuPause: "一時停止",
+        menuSettings: "設定...",
+        menuQuit: "Delayed Cmd+Q を終了",
+        menuTooltipActive: "Delayed Cmd+Q - 有効",
+        menuTooltipInactive: "Delayed Cmd+Q - 無効",
+
+        menuEdit: "編集",
+        menuUndo: "取り消す",
+        menuCut: "カット",
+        menuCopy: "コピー",
+        menuPaste: "ペースト",
+        menuSelectAll: "すべてを選択",
+        menuWindow: "ウインドウ",
+        menuClose: "閉じる",
+
+        holdSummaryFormat: "%@ の間 ⌘Q を押し続けるとアプリが終了します",
+        durationSecondsFormat: "%.1f秒",
+        previewHint: "クリックするとプレビューします",
+        delayTitle: "遅延時間",
+        continuousQuitTitle: "連続終了を許可",
+        continuousQuitSubtitle: "押し続けている間、次のアプリも続けて終了します",
+        pauseTitle: "一時停止",
+        pauseSubtitle: "⌘Q を本来の動作に戻します",
+        launchAtLoginTitle: "ログイン時に起動",
+        showAppIconTitle: "アプリアイコンを表示",
+        showAppIconSubtitle: "終了するアプリのアイコンをリング中央に表示します",
+        appearanceTitle: "テーマ",
+        appearanceSystem: "システム",
+        appearanceLight: "ライト",
+        appearanceDark: "ダーク",
+        languageTitle: "言語",
+        languageSystem: "システム",
+
+        accessibilityGranted: "アクセシビリティの許可あり",
+        accessibilityRequired: "アクセシビリティの許可が必要",
+        openSystemSettings: "設定を開く",
+        eventTapFailure: "キーボードイベントを取得できません。アクセシビリティの許可を確認してください。"
+    )
+}
