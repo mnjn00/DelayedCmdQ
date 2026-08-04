@@ -20,9 +20,8 @@ struct AppSettingsTests {
         #expect(settings.isPaused == false)
         #expect(settings.showsApplicationIcon == true)
         #expect(settings.allowsContinuousQuit == false)
-        #expect(settings.appearance == .system)
+        #expect(settings.theme == .liquid)
         #expect(settings.language == .system)
-        #expect(settings.glassOpacity == GlassOpacity.default)
     }
 
     @Test("Changes round-trip through UserDefaults")
@@ -34,28 +33,26 @@ struct AppSettingsTests {
         settings.isPaused = true
         settings.showsApplicationIcon = false
         settings.allowsContinuousQuit = true
-        settings.appearance = .dark
+        settings.theme = .dark
         settings.language = .japanese
-        settings.glassOpacity = 0.5
 
         let reloaded = AppSettings(defaults: defaults)
         #expect(reloaded.holdDuration == 2.5)
         #expect(reloaded.isPaused == true)
         #expect(reloaded.showsApplicationIcon == false)
         #expect(reloaded.allowsContinuousQuit == true)
-        #expect(reloaded.appearance == .dark)
+        #expect(reloaded.theme == .dark)
         #expect(reloaded.language == .japanese)
-        #expect(reloaded.glassOpacity == 0.5)
     }
 
     @Test("An unrecognised stored enum falls back instead of bricking the preference")
     func repairsUnknownEnumValues() {
         let defaults = makeDefaults("unknown-enum")
-        defaults.set("neon", forKey: AppSettings.Key.appearance)
+        defaults.set("neon", forKey: AppSettings.Key.theme)
         defaults.set("klingon", forKey: AppSettings.Key.language)
 
         let settings = AppSettings(defaults: defaults)
-        #expect(settings.appearance == .system)
+        #expect(settings.theme == .liquid)
         #expect(settings.language == .system)
     }
 

@@ -34,7 +34,6 @@ struct Localization: Sendable, Equatable {
     let durationSecondsFormat: String
     let previewHint: String
     let delayTitle: String
-    let glassOpacityTitle: String
     let continuousQuitTitle: String
     let continuousQuitSubtitle: String
     let pauseTitle: String
@@ -42,10 +41,10 @@ struct Localization: Sendable, Equatable {
     let launchAtLoginTitle: String
     let showAppIconTitle: String
     let showAppIconSubtitle: String
-    let appearanceTitle: String
-    let appearanceSystem: String
-    let appearanceLight: String
-    let appearanceDark: String
+    let themeTitle: String
+    let themeLiquid: String
+    let themeLight: String
+    let themeDark: String
     let languageTitle: String
     let languageSystem: String
 

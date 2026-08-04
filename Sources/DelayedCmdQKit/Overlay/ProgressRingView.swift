@@ -9,7 +9,7 @@ struct ProgressRingView: View {
         RingHUD(
             progress: model.progress,
             icon: model.icon,
-            glassOpacity: model.glassOpacity
+            theme: model.theme
         )
             .scaleEffect(model.isVisible ? 1 : RingMetrics.hiddenScale)
             .opacity(model.isVisible ? 1 : 0)
@@ -69,14 +69,14 @@ struct RingHUD: View {
     let icon: NSImage?
     /// The floating overlay samples the desktop; the Settings preview must not.
     var blendsBehindWindow: Bool = true
-    var glassOpacity: Double = GlassOpacity.default
+    var theme: AppTheme = .liquid
 
     var body: some View {
         RingFace(progress: progress, icon: icon)
-            .glassCoin(
+            .hudCoin(
                 diameter: RingMetrics.coin,
-                blendsBehindWindow: blendsBehindWindow,
-                opacity: glassOpacity
+                theme: theme,
+                blendsBehindWindow: blendsBehindWindow
             )
             .frame(width: RingMetrics.canvas, height: RingMetrics.canvas)
             .accessibilityHidden(true)

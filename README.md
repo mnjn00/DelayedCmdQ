@@ -40,8 +40,8 @@ learns it was pressed.
 
 - **Hold to quit** — ⌘Q must be held for a duration you choose
 - **Minimal HUD** — an outline-only ring that fills clockwise from twelve o'clock
-- **Liquid Glass** — genuine Liquid Glass on macOS 26 Tahoe and later; the vibrancy material that was native before it
-- **Light and dark** — follows the system, or pin either one
+- **Liquid Glass** — `NSGlassEffectView` on macOS 26 Tahoe and later, with rim and specular highlights drawn over it; the vibrancy material before that
+- **Three themes** — Liquid Glass, Light or Dark
 - **Four languages** — English, 한국어, 日本語 and 简体中文, following the system or pinned
 - **Adjustable delay** — 0.3 to 5.0 seconds, with a live preview in Settings
 - **Optional chaining** — keep holding to move on to the next app, or stop after the first
@@ -110,8 +110,7 @@ Open from the menu bar icon, or press <kbd>⌘</kbd><kbd>,</kbd>.
 | Setting | Description | Default |
 | --- | --- | --- |
 | **Delay** | How long ⌘Q must be held | `1.0s` |
-| **Glass opacity** | How solid the glass behind the ring is drawn | `100%` |
-| **Theme** | System, Light or Dark | System |
+| **Theme** | Liquid, Light or Dark | Liquid |
 | **Language** | System, English, 한국어, 日本語 or 简体中文 | System |
 | **Allow continuous quit** | Keep quitting the next app while held | Off |
 | **Pause** | Restore normal ⌘Q behaviour | Off |

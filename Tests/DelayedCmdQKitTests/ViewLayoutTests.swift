@@ -20,10 +20,12 @@ struct ViewLayoutTests {
         return AppSettings(defaults: defaults)
     }
 
-    @Test("The HUD lays out at its documented canvas size")
+    @Test("The HUD lays out at its documented canvas size in every theme")
     func hudLaysOut() {
-        for progress in [0.0, 0.5, 1.0] {
-            let view = NSHostingView(rootView: RingHUD(progress: progress, icon: nil))
+        for theme in AppTheme.allCases {
+            let view = NSHostingView(
+                rootView: RingHUD(progress: 0.5, icon: nil, theme: theme)
+            )
             view.layoutSubtreeIfNeeded()
 
             #expect(view.fittingSize.width == RingMetrics.canvas)
@@ -62,10 +64,11 @@ struct ViewLayoutTests {
         #expect(view.fittingSize.height < 900)
     }
 
-    @Test("Settings lays out under a forced light or dark appearance")
-    func settingsLaysOutInBothAppearances() {
-        for appearanceName in [NSAppearance.Name.aqua, .darkAqua] {
-            let settings = makeSettings(appearanceName.rawValue)
+    @Test("Settings lays out under every theme")
+    func settingsLaysOutInEveryTheme() {
+        for theme in AppTheme.allCases {
+            let settings = makeSettings(theme.rawValue)
+            settings.theme = theme
 
             let view = NSHostingView(
                 rootView: SettingsView(
@@ -74,7 +77,7 @@ struct ViewLayoutTests {
                     loginItem: LoginItem()
                 )
             )
-            view.appearance = NSAppearance(named: appearanceName)
+            view.appearance = theme.nsAppearance ?? NSAppearance(named: .darkAqua)
             view.layoutSubtreeIfNeeded()
 
             #expect(view.fittingSize.width == 380)
@@ -83,26 +86,40 @@ struct ViewLayoutTests {
     }
 }
 
-@Suite("Appearance mode")
-struct AppearanceModeTests {
-    @Test("System means inherit, so it must not force an appearance")
-    func systemInherits() {
-        #expect(AppearanceMode.system.nsAppearance == nil)
+@Suite("Theme")
+struct AppThemeTests {
+    @Test("Liquid follows the system, so it must not force an appearance")
+    func liquidInherits() {
+        #expect(AppTheme.liquid.nsAppearance == nil)
     }
 
     @Test("Light and dark map to the matching AppKit appearances")
-    func explicitModesMap() {
-        #expect(AppearanceMode.light.nsAppearance?.name == .aqua)
-        #expect(AppearanceMode.dark.nsAppearance?.name == .darkAqua)
+    func explicitThemesMap() {
+        #expect(AppTheme.light.nsAppearance?.name == .aqua)
+        #expect(AppTheme.dark.nsAppearance?.name == .darkAqua)
     }
 
-    @Test("Every mode has a title in every language")
+    /// Glass is translucent and takes its tone from the backdrop, so it belongs to
+    /// the one theme that does not pin an appearance.
+    @Test("Only the Liquid theme draws glass")
+    func onlyLiquidUsesGlass() {
+        #expect(AppTheme.liquid.usesGlass)
+        #expect(!AppTheme.light.usesGlass)
+        #expect(!AppTheme.dark.usesGlass)
+    }
+
+    @Test("Every theme has a distinct title in every language")
     func titlesExist() {
         let languages: [Localization] = [.english, .korean, .japanese, .simplifiedChinese]
         for strings in languages {
-            let titles = AppearanceMode.allCases.map { $0.title(strings) }
+            let titles = AppTheme.allCases.map { $0.title(strings) }
             #expect(titles.allSatisfy { !$0.isEmpty })
             #expect(Set(titles).count == titles.count)
         }
+    }
+
+    @Test("There are exactly three themes")
+    func threeThemes() {
+        #expect(AppTheme.allCases.count == 3)
     }
 }

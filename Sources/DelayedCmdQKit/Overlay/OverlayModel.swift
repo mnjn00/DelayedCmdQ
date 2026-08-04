@@ -11,6 +11,6 @@ final class OverlayModel: ObservableObject {
     @Published var isVisible: Bool = false
     /// Icon of the app that will be quit, or nil when the preference is off.
     @Published var icon: NSImage?
-    /// How solid the glass coin is drawn.
-    @Published var glassOpacity: Double = GlassOpacity.default
+    /// Which surface the coin is drawn with.
+    @Published var theme: AppTheme = .liquid
 }

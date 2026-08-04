@@ -12,7 +12,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             RingPreview(
                 duration: settings.holdDuration,
-                glassOpacity: settings.glassOpacity,
+                theme: settings.theme,
                 hint: strings.previewHint
             )
                 .padding(.top, 22)
@@ -30,8 +30,7 @@ struct SettingsView: View {
             VStack(spacing: 16) {
                 durationRow
                 Divider()
-                glassOpacityRow
-                appearanceRow
+                themeRow
                 languageRow
                 Divider()
                 toggleRow(
@@ -95,41 +94,13 @@ struct SettingsView: View {
         }
     }
 
-    private var glassOpacityRow: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Text(strings.glassOpacityTitle).font(.system(size: 13))
-                Spacer()
-                Text(GlassOpacity.text(settings.glassOpacity))
-                    .font(.system(size: 13, weight: .medium).monospacedDigit())
-                    .foregroundStyle(.secondary)
-            }
-
-            Slider(
-                value: $settings.glassOpacity,
-                in: GlassOpacity.range,
-                step: GlassOpacity.step
-            ) {
-                EmptyView()
-            } minimumValueLabel: {
-                Text(GlassOpacity.text(GlassOpacity.range.lowerBound))
-                    .font(.system(size: 10))
-                    .foregroundStyle(.tertiary)
-            } maximumValueLabel: {
-                Text(GlassOpacity.text(GlassOpacity.range.upperBound))
-                    .font(.system(size: 10))
-                    .foregroundStyle(.tertiary)
-            }
-        }
-    }
-
-    private var appearanceRow: some View {
+    private var themeRow: some View {
         HStack {
-            Text(strings.appearanceTitle).font(.system(size: 13))
+            Text(strings.themeTitle).font(.system(size: 13))
             Spacer(minLength: 12)
-            Picker("", selection: $settings.appearance) {
-                ForEach(AppearanceMode.allCases, id: \.self) { mode in
-                    Text(mode.title(strings)).tag(mode)
+            Picker("", selection: $settings.theme) {
+                ForEach(AppTheme.allCases, id: \.self) { theme in
+                    Text(theme.title(strings)).tag(theme)
                 }
             }
             .labelsHidden()
@@ -233,7 +204,7 @@ private struct GlassButton: View {
 /// instead of by number.
 private struct RingPreview: View {
     let duration: TimeInterval
-    let glassOpacity: Double
+    let theme: AppTheme
     let hint: String
 
     @State private var progress: Double = 0
@@ -246,7 +217,7 @@ private struct RingPreview: View {
             progress: progress,
             icon: nil,
             blendsBehindWindow: false,
-            glassOpacity: glassOpacity
+            theme: theme
         )
             .frame(width: RingMetrics.canvas, height: RingMetrics.canvas * 0.78)
             .contentShape(Rectangle())

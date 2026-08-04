@@ -9,9 +9,8 @@ final class AppSettings: ObservableObject {
         static let isPaused = "isPaused"
         static let showsApplicationIcon = "showsApplicationIcon"
         static let allowsContinuousQuit = "allowsContinuousQuit"
-        static let appearance = "appearance"
+        static let theme = "theme"
         static let language = "language"
-        static let glassOpacity = "glassOpacity"
     }
 
     private let defaults: UserDefaults
@@ -43,20 +42,8 @@ final class AppSettings: ObservableObject {
         didSet { defaults.set(allowsContinuousQuit, forKey: Key.allowsContinuousQuit) }
     }
 
-    /// How solid the glass coin behind the ring is drawn.
-    @Published var glassOpacity: Double {
-        didSet {
-            let normalized = GlassOpacity.normalized(glassOpacity)
-            guard normalized == glassOpacity else {
-                glassOpacity = normalized
-                return
-            }
-            defaults.set(glassOpacity, forKey: Key.glassOpacity)
-        }
-    }
-
-    @Published var appearance: AppearanceMode {
-        didSet { defaults.set(appearance.rawValue, forKey: Key.appearance) }
+    @Published var theme: AppTheme {
+        didSet { defaults.set(theme.rawValue, forKey: Key.theme) }
     }
 
     @Published var language: AppLanguage {
@@ -74,9 +61,7 @@ final class AppSettings: ObservableObject {
         isPaused = defaults.bool(forKey: Key.isPaused)
         showsApplicationIcon = defaults.object(forKey: Key.showsApplicationIcon) as? Bool ?? true
         allowsContinuousQuit = defaults.bool(forKey: Key.allowsContinuousQuit)
-        let storedOpacity = defaults.object(forKey: Key.glassOpacity) as? Double
-        glassOpacity = GlassOpacity.normalized(storedOpacity ?? GlassOpacity.default)
-        appearance = Self.enumValue(defaults.string(forKey: Key.appearance), default: .system)
+        theme = Self.enumValue(defaults.string(forKey: Key.theme), default: .liquid)
         language = Self.enumValue(defaults.string(forKey: Key.language), default: .system)
     }
 

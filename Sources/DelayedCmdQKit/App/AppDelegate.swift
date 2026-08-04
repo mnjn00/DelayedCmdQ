@@ -35,7 +35,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         installMainMenu()
 
-        settings.$appearance
+        settings.$theme
             .dropFirst()
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in self?.applyAppearance() }
@@ -64,7 +64,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Scopes the light/dark override to this app's own windows.
     private func applyAppearance() {
-        NSApp.appearance = settings.appearance.nsAppearance
+        NSApp.appearance = settings.theme.nsAppearance
     }
 
     private func installMainMenu() {
