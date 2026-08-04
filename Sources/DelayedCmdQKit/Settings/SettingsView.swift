@@ -206,7 +206,9 @@ private struct RingPreview: View {
     @State private var replayTask: Task<Void, Never>?
 
     var body: some View {
-        RingHUD(progress: progress, icon: nil)
+        // Inside an opaque window, so the coin blends within the window rather
+        // than sampling the desktop through it.
+        RingHUD(progress: progress, icon: nil, blendsBehindWindow: false)
             .frame(width: RingMetrics.canvas, height: RingMetrics.canvas * 0.78)
             .contentShape(Rectangle())
             .onTapGesture { replay() }

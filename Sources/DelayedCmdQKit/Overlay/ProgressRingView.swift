@@ -28,7 +28,8 @@ enum RingMetrics {
     static let disappearDuration: TimeInterval = 0.2
 }
 
-struct RingHUD: View {
+/// Ring and icon only, with no surface of its own.
+struct RingFace: View {
     let progress: Double
     let icon: NSImage?
 
@@ -56,8 +57,19 @@ struct RingHUD: View {
             }
         }
         .frame(width: RingMetrics.ring, height: RingMetrics.ring)
-        .glassCoin(diameter: RingMetrics.coin)
-        .frame(width: RingMetrics.canvas, height: RingMetrics.canvas)
-        .accessibilityHidden(true)
+    }
+}
+
+struct RingHUD: View {
+    let progress: Double
+    let icon: NSImage?
+    /// The floating overlay samples the desktop; the Settings preview must not.
+    var blendsBehindWindow: Bool = true
+
+    var body: some View {
+        RingFace(progress: progress, icon: icon)
+            .glassCoin(diameter: RingMetrics.coin, blendsBehindWindow: blendsBehindWindow)
+            .frame(width: RingMetrics.canvas, height: RingMetrics.canvas)
+            .accessibilityHidden(true)
     }
 }
